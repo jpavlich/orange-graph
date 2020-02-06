@@ -31,7 +31,7 @@ class GraphStats(widget.OWWidget):
         self.infob = gui.widgetLabel(box, "")
 
     @Inputs.edges
-    def set_edges(self, G: nx.Graph):
+    def set_graph(self, G: nx.Graph):
         if G is not None:
             self.infoa.setText("Graph stats")
             self.infob.setText(
