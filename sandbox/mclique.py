@@ -14,3 +14,4 @@ mclique: set = max_clique(G)
 p = nx.dijkstra_path(G, 1, 9)
 print(p)
 
+# nx.truncated_tetrahedron_graph
