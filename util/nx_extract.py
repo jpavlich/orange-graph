@@ -130,20 +130,20 @@ def str_to_type(typename: str) -> Type:
         try:
             return eval(typename)
         except Exception:
-            print("***\nCannot interpret: ", typename)
-            print("***")
+            # print("***\nCannot interpret: ", typename)
+            # print("***")
 
             return Type[Any]
 
 
 class ParamDesc(Parameter):
-    def __init__(self, param, type=[], doc=""):
+    def __init__(self, param, types=[], doc=""):
         super().__init__(
             param.name, param.kind, default=param.default, annotation=param.annotation,
         )
-        print(self.name, type)
+        # print(self.name, types)
         self.doc = doc
-        self.type = [str_to_type(t) for t in type]
+        self.type = list(set(str_to_type(t) for t in types))
 
     def __repr__(self):
         return str(self.type)
@@ -289,7 +289,8 @@ if __name__ == "__main__":
         if md:
             print(md)
             for param, desc in md.signature.items():
-                print(desc.name, desc.type)
+                # print(desc.name, desc.type)
+                print(desc.type)
 
     # md = get_member_metadata(getmembers(nx)[121])
     # print(md)
