@@ -16,7 +16,7 @@ class Graph(widget.OWWidget):
         edges = Input("Edges", Orange.data.Table)
 
     class Outputs:
-        graph = Output("Graph", nx.Graph)
+        graph = Output("Graph", nx.DiGraph)
 
     want_main_area = False
 
@@ -32,9 +32,16 @@ class Graph(widget.OWWidget):
 
     @Inputs.edges
     def set_edges(self, dataset):
-        if dataset is not None:
-            G: nx.Graph = nx.Graph()
-            for row in dataset:
+        self.dataset = dataset
+
+    def handleNewSignals(self):
+        """Coalescing update."""
+        self.commit()
+
+    def commit(self):
+        if self.dataset is not None:
+            G: nx.DiGraph = nx.DiGraph()
+            for row in self.dataset:
                 G.add_edge(row["source"], row["target"])
             self.infoa.setText("Graph")
             self.infob.setText(

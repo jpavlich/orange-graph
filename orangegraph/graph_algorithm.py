@@ -1,14 +1,16 @@
 import sys
 import numpy
 import networkx as nx
+from networkx.algorithms.approximation.clique import max_clique
 import Orange.data
-from Orange.widgets import widget, gui
+from Orange.widgets import widget, gui, settings
 from Orange.widgets.utils.signals import Input, Output
+from Orange.widgets.widget import OWWidget
 
 
-class GraphStats(widget.OWWidget):
-    name = "Graph Stats"
-    description = "Calculates some graph stats"
+class GraphAlgorithm(OWWidget):
+    name = "Graph Algorithm"
+    description = "Applies algorithm over a graph"
     icon = "icons/graph.svg"
     priority = 10
 
@@ -16,7 +18,7 @@ class GraphStats(widget.OWWidget):
         in_graph = Input("Graph", nx.Graph)
 
     class Outputs:
-        out_graph = Output("Graph", nx.Graph)
+        result = Output("Result", Orange.data.Table)
 
     want_main_area = False
 
@@ -30,24 +32,25 @@ class GraphStats(widget.OWWidget):
         )
         self.infob = gui.widgetLabel(box, "")
 
+        gui.button(box, self, "Commit", callback=self.commit)
+
     @Inputs.in_graph
     def set_in_graph(self, G: nx.Graph):
         self.G = G
 
-    def handleNewSignals(self):
-        """Coalescing update."""
-        self.commit()
+    # def handleNewSignals(self):
+    #     """Coalescing update."""
+    #     self.commit()
 
     def commit(self):
         """Commit/send the outputs"""
         if self.G is not None:
-            self.infoa.setText("Graph stats")
-            self.infob.setText(
-                f"Nodes: {self.G.number_of_nodes()}. Edges: {self.G.number_of_edges()}"
-            )
-            self.Outputs.out_graph.send(self.G)
+            mclique: set = max_clique(self.G)
+            self.infoa.setText("Max clique:")
+            self.infob.setText(f"Nodes: {len(mclique)}")
+            self.Outputs.result.send(None)
         else:
             self.infoa.setText("No data on input yet, waiting to get something.")
             self.infob.setText("")
-            self.Outputs.out_graph.send(None)
+            self.Outputs.result.send(None)
 
