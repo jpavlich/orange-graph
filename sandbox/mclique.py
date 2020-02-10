@@ -11,4 +11,6 @@ for i in range(0, 10):
 
 mclique: set = max_clique(G)
 
-print(mclique)
+p = nx.dijkstra_path(G, 1, 9)
+print(p)
+
