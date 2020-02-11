@@ -1,3 +1,34 @@
-def {{ fun.name }}({{fun.signature.keys() | join(', ') }}) -> {{fun.return_type}}:
+{%- macro typed_params(params) -%}
+    {%- for param in params -%}
+        {%if len(param.type) > 1 -%}
+            {{ param.name }}: Union[{{param.type|join(', ')}}]
+        {%- elif len(param.type) == 1-%}
+            {{ param.name }}: {{param.type[0]}}
+        {%- else -%}
+            {{ param.name }}: Any
+        {%- endif -%}
+        {{ ", " if not loop.last }}
+    {%- endfor -%}
+{%- endmacro -%}
+
+{%- macro return_type(return_desc) -%}
+    {%- if return_desc -%}
+        {%- if len(return_desc.values()) > 1 -%}
+            -> Tuple[ 
+                {%- for param in return_desc.values() -%}
+                    {{param.type[0] }}
+                    {{- ", " if not loop.last -}}
+                {%- endfor -%} 
+            ]
+        {%- else -%}
+            -> {{ next(iter(return_desc.values())).type[0] }}
+        {%- endif -%}
+    {%- else -%}
+    -> Any
+    {%- endif -%}
+    
+{%- endmacro -%}
+
+def {{ fun.name }}({{typed_params(fun.signature.values()) }}){{return_type(fun.return_desc)}}:
     return nx.{{fun.name}} ({{fun.signature.keys() | join(', ')  }})
 
