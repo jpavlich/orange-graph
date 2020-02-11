@@ -21,7 +21,9 @@
                 {%- endfor -%} 
             ]
         {%- else -%}
-            -> {{ next(iter(return_desc.values())).type[0] }}
+            {%- if next(iter(return_desc.values())).type[0] -%}
+                -> {{ next(iter(return_desc.values())).type[0] }}
+            {%- endif -%}   
         {%- endif -%}
     {%- else -%}
     -> Any

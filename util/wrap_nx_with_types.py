@@ -38,6 +38,7 @@ if __name__ == "__main__":
 
     types: Set = set({})
     fun_template = load_template("util/wrapped_fun.py.j2")
-    for m in getmembers(nx):
+    for i, m in enumerate(getmembers(nx)):
+        print(f"#{i}")
         process_member(m)
-    # process_member(getmembers(nx)[-10])
+    # process_member(getmembers(nx)[716])

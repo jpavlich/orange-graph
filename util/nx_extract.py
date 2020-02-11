@@ -17,13 +17,17 @@ SEE = "See"
 
 
 def normalize_typename(typename: str) -> str:
-    tl = typename.lower()
+    tl = typename.lower().strip()
+    if not tl:
+        return "Any"
     if tl in type_map:
         return type_map[tl]
     else:
         try:
-            eval(typename)
-            return typename
+            if type(eval(typename)) == type:
+                return typename
+            else:
+                return "Any"
         except Exception:
             print("#***Cannot", typename)
 
