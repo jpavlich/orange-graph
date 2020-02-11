@@ -1,0 +1,6 @@
+Union[
+    {%- for arg in param.annotation.__args__ -%}
+        {{ arg.__name__ }}
+        {{- ", " if not loop.last -}}
+    {%- endfor -%}
+]

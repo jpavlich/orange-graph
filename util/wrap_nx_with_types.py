@@ -3,18 +3,7 @@ import util.nx_extract as nxe
 from inspect import getmembers, isfunction, signature
 from util.nx_extract import get_member_metadata, FunctionMetadata
 from typing import *
-from jinja2 import Template, Environment
-
-# app.jinja_env.trim_blocks = True
-# app.jinja_env.lstrip_blocks = True
-
-
-env = Environment(trim_blocks=True, lstrip_blocks=True)
-
-
-def load_template(filename):
-    with open(filename) as f:
-        return env.from_string(f.read())
+from util.template import load_template
 
 
 def wrap_function(fun_md: FunctionMetadata):
