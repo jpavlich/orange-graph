@@ -1,0 +1,3 @@
+def {{ fun.name }}({{fun.signature.keys() | join(', ') }}) -> {{fun.return_type}}:
+    return nx.{{fun.name}} ({{fun.signature.keys() | join(', ')  }})
+
