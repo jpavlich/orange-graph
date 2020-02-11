@@ -5,11 +5,14 @@
 		<node id="1" name="Data Table" position="(271.0, 161.0)" project_name="Orange3" qualified_name="Orange.widgets.data.owtable.OWDataTable" title="Data Table" version="" />
 		<node id="2" name="Graph" position="(414.0, 156.0)" project_name="Graph" qualified_name="orangegraph.graph.Graph" title="Graph" version="" />
 		<node id="3" name="Graph Stats" position="(568.0, 151.0)" project_name="Graph" qualified_name="orangegraph.graph_stats.GraphStats" title="Graph Stats" version="" />
+		<node id="4" name="Graph Test Out" position="(330.0, 382.0)" project_name="Graph" qualified_name="orangegraph.graph_test_out.GraphTestOut" title="Graph Test Out" version="" />
+		<node id="5" name="Graph Test In" position="(479.0, 378.0)" project_name="Graph" qualified_name="orangegraph.graph_test_in.GraphTestIn" title="Graph Test In" version="" />
 	</nodes>
 	<links>
 		<link enabled="true" id="0" sink_channel="Data" sink_node_id="1" source_channel="Data" source_node_id="0" />
 		<link enabled="true" id="1" sink_channel="Edges" sink_node_id="2" source_channel="Data" source_node_id="1" />
 		<link enabled="true" id="2" sink_channel="Graph" sink_node_id="3" source_channel="Graph" source_node_id="2" />
+		<link enabled="true" id="3" sink_channel="data" sink_node_id="5" source_channel="data" source_node_id="4" />
 	</links>
 	<annotations />
 	<thumbnail />
@@ -75,6 +78,8 @@ dWgafXEsdWJldS4=
 </properties>
 		<properties format="literal" node_id="2">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x07l\x00\x00\x01\xa0\x00\x00\x083\x00\x00\x02.\x00\x00\x07l\x00\x00\x01\xb9\x00\x00\x083\x00\x00\x02.\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x07l\x00\x00\x01\xb9\x00\x00\x083\x00\x00\x02.', '__version__': 1}</properties>
 		<properties format="literal" node_id="3">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x07l\x00\x00\x01\xa0\x00\x00\x08\xa2\x00\x00\x02.\x00\x00\x07l\x00\x00\x01\xb9\x00\x00\x08\xa2\x00\x00\x02.\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x07l\x00\x00\x01\xb9\x00\x00\x08\xa2\x00\x00\x02.', '__version__': 1}</properties>
+		<properties format="literal" node_id="4">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x07t\x00\x00\x02-\x00\x00\x08\xaa\x00\x00\x02\xd6\x00\x00\x07t\x00\x00\x02F\x00\x00\x08\xaa\x00\x00\x02\xd6\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x07t\x00\x00\x02F\x00\x00\x08\xaa\x00\x00\x02\xd6', '__version__': 1}</properties>
+		<properties format="literal" node_id="5">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x075\x00\x00\x01\xa1\x00\x00\x08k\x00\x00\x02/\x00\x00\x075\x00\x00\x01\xba\x00\x00\x08k\x00\x00\x02/\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x075\x00\x00\x01\xba\x00\x00\x08k\x00\x00\x02/', '__version__': 1}</properties>
 	</node_properties>
 	<session_state>
 		<window_groups />
