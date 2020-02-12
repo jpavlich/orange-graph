@@ -10,6 +10,11 @@ import io
 import sys
 from util.template import load_template
 from jinja2 import Template
+from util.introspect import full_name, is_primitive
+import Orange.data
+from Orange.widgets import widget, gui, settings
+from Orange.widgets.utils.signals import Input, Output
+from Orange.widgets.widget import OWWidget
 
 
 class Param(object):
@@ -20,26 +25,36 @@ class Param(object):
         self.type = type
 
 
-def is_union(t):
-    return type(t) is type(Union)
+def wrap_type(t: Type):
+    fname = full_name(t)
+    if fname == "typing.List":
+        return Orange.data.Table
+    else:
+        return t
 
 
 def wrap_function(name, fun: Callable):
     sig: Signature = signature(fun)
-    t = load_template("./util/owwidget_wrapper.py.j2")
+    t = load_template("./util/templates/owwidget_wrapper.py.j2")
     params = []
     for param in sig.parameters.values():
-        # print(param.name, param.annotation, param.default)
         p = Param(param.name)
-        if is_union(param.annotation):
-            p.type = load_template("./util/union.j2").render(param=param)
-        else:
-            p.type = param.annotation.__name__
+        p.type = wrap_type(param.annotation)
         params.append(p)
-    print(t.render(sig=sig, name=name, params=params))
+    ret_type = wrap_type(sig.return_annotation)
+    print(
+        t.render(
+            sig=sig,
+            name=name,
+            params=params,
+            ret_type=ret_type,
+            full_name=full_name,
+            is_primitive=is_primitive,
+        )
+    )
 
 
 if __name__ == "__main__":
-    from orangegraph.graph_functions import *
+    from orangegraph.functions import *
 
     wrap_function("dpath", dpath)

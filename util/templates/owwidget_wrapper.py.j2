@@ -1,6 +1,6 @@
 import sys
 import numpy
-import networkx as nx
+import networkx
 from networkx.algorithms.approximation.clique import max_clique
 import Orange.data
 from Orange.widgets import widget, gui, settings
@@ -9,20 +9,20 @@ from Orange.widgets.widget import OWWidget
 
 
 class {{ name }}(OWWidget):
-    name = "Graph Algorithm"
+    name = "{{name}}"
     description = "Applies algorithm over a graph"
     icon = "icons/graph.svg"
     priority = 10
 
     class Inputs:
         {# in_graph = Input("Graph", nx.Graph) #}
-        {%- for param in params %}
-            {{param.name}} = Input("{{param.name}}", {{param.type }})
-        {% endfor -%}
+        {%- for param in params -%}
+            {{param.name}} = Input("{{param.name}}", {{full_name(param.type) }})
+        {% endfor %}
 
 
     class Outputs:
-        result = Output("Result", Orange.data.Table)
+        result = Output("Result", {{full_name(ret_type)}})
 
     want_main_area = False
 
@@ -36,11 +36,34 @@ class {{ name }}(OWWidget):
         )
         self.infob = gui.widgetLabel(box, "")
 
+{% for param in params if is_primitive(param.type) %}
+
+        self.txt_{{param.name}} = gui.lineEdit(box, self, '', orientation="horizontal", label="{{param.name}}:")
+        self.txt_{{param.name}}.textChanged.connect(self.update_{{param.name}})
+
+{% endfor %}
+
         gui.button(box, self, "Commit", callback=self.commit)
 
-    @Inputs.in_graph
-    def set_in_graph(self, G: nx.Graph):
-        self.G = G
+{% for param in params %}
+
+    def update_{{param.name}}(self):
+        try:
+            {{param.name}}_value = eval(self.txt_{{param.name}}.text())
+            self.{{param.name}} = {{param.name}}_value
+
+        except:
+            pass
+
+
+{% endfor %}
+{% for param in params %}
+
+    @Inputs.{{param.name}}
+    def set_{{param.name}}(self, {{param.name}}: {{full_name(param.type) }}):
+        self.{{param.name}} = {{param.name}}
+{% endfor %}
+    
 
     # def handleNewSignals(self):
     #     """Coalescing update."""
@@ -57,4 +80,3 @@ class {{ name }}(OWWidget):
             self.infoa.setText("No data on input yet, waiting to get something.")
             self.infob.setText("")
             self.Outputs.result.send(None)
-
