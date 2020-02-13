@@ -1,24 +1,23 @@
 import sys
 import numpy
 import networkx as nx
-from networkx.algorithms.approximation.clique import max_clique
 import Orange.data
-from Orange.widgets import widget, gui, settings
+from Orange.widgets import widget, gui
 from Orange.widgets.utils.signals import Input, Output
-from Orange.widgets.widget import OWWidget
+import json
 
 
-class GraphTestIn(OWWidget):
-    name = "Graph Test In"
-    description = "Test In"
+class ObjToJson(widget.OWWidget):
+    name = "Object to Json"
+    description = "Converts an object into JSON format"
     icon = "icons/graph.svg"
     priority = 10
 
     class Inputs:
-        data = Input("data", object)
+        in_obj = Input("Graph", object)
 
     class Outputs:
-        pass
+        out_json = Output("Json", str)
 
     want_main_area = False
 
@@ -32,9 +31,9 @@ class GraphTestIn(OWWidget):
         )
         self.infob = gui.widgetLabel(box, "")
 
-    @Inputs.data
-    def set_data(self, d: object):
-        self.d = d
+    @Inputs.in_obj
+    def set_in_obj(self, obj: nx.Graph):
+        self.obj = obj
 
     def handleNewSignals(self):
         """Coalescing update."""
@@ -42,13 +41,12 @@ class GraphTestIn(OWWidget):
 
     def commit(self):
         """Commit/send the outputs"""
-        if self.d is not None:
-            # mclique: set = max_clique(self.G)
-            mclique = ""
-            self.infoa.setText("Data: ")
-            self.infob.setText(f"{self.d}")
-
+        if self.obj is not None:
+            j = json.dumps(self.obj, indent=4)
+            print(j)
+            self.Outputs.out_json.send(j)
         else:
             self.infoa.setText("No data on input yet, waiting to get something.")
             self.infob.setText("")
+            self.Outputs.out_json.send(None)
 

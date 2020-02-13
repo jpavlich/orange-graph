@@ -6,12 +6,18 @@
 		<node id="2" name="Graph Stats" position="(440.0, 133.0)" project_name="Graph" qualified_name="orangegraph.graph_stats.GraphStats" title="Graph Stats" version="" />
 		<node id="3" name="dpath" position="(400.0, 407.0)" project_name="Graph" qualified_name="orangegraph.dpath.dpath" title="dpath" version="" />
 		<node id="4" name="File" position="(70.0, 376.0)" project_name="Orange3" qualified_name="Orange.widgets.data.owfile.OWFile" title="Edges" version="" />
+		<node id="5" name="Graph View" position="(494.0, 269.0)" project_name="Graph" qualified_name="orangegraph.graph_view.GraphView" title="Graph View" version="" />
+		<node id="6" name="To Dict" position="(228.0, 498.0)" project_name="Graph" qualified_name="orangegraph.graph_to_dict.GraphToDict" title="To Dict" version="" />
+		<node id="7" name="Object to Json" position="(391.0, 559.0)" project_name="Graph" qualified_name="orangegraph.obj_to_json.ObjToJson" title="Object to Json" version="" />
 	</nodes>
 	<links>
 		<link enabled="true" id="0" sink_channel="Graph" sink_node_id="2" source_channel="G" source_node_id="1" />
 		<link enabled="true" id="1" sink_channel="G" sink_node_id="3" source_channel="G" source_node_id="1" />
 		<link enabled="true" id="2" sink_channel="Nodes" sink_node_id="1" source_channel="Data" source_node_id="0" />
 		<link enabled="true" id="3" sink_channel="Edges" sink_node_id="1" source_channel="Data" source_node_id="4" />
+		<link enabled="true" id="4" sink_channel="G" sink_node_id="5" source_channel="G" source_node_id="1" />
+		<link enabled="true" id="5" sink_channel="Graph" sink_node_id="6" source_channel="G" source_node_id="1" />
+		<link enabled="true" id="6" sink_channel="Graph" sink_node_id="7" source_channel="Dict" source_node_id="6" />
 	</links>
 	<annotations />
 	<thumbnail />
@@ -165,6 +171,9 @@ Y29sb3IsIElyaXMtdmlyZ2luaWNhccCJZWVzaDlLAXVoTihotksChnHBaLhLAoZxwmi6SwKGccNo
 vEsChnHEdHHFaFQpaFVovl1xxihYCwAAAElyaXMtc2V0b3NhccdYDwAAAElyaXMtdmVyc2ljb2xv
 cnHIWA4AAABJcmlzLXZpcmdpbmljYXHJZYZxyoVxy2hWXXHMdWJldS4=
 </properties>
+		<properties format="literal" node_id="5">{'controlAreaVisible': True, 'savedWidgetGeometry': b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x075\x00\x00\x01\x93\x00\x00\x08k\x00\x00\x02&lt;\x00\x00\x075\x00\x00\x01\xac\x00\x00\x08k\x00\x00\x02&lt;\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x075\x00\x00\x01\xac\x00\x00\x08k\x00\x00\x02&lt;', '__version__': 1}</properties>
+		<properties format="literal" node_id="6">{'controlAreaVisible': True, 'savedWidgetGeometry': None, '__version__': 1}</properties>
+		<properties format="literal" node_id="7">{'controlAreaVisible': True, 'savedWidgetGeometry': None, '__version__': 1}</properties>
 	</node_properties>
 	<session_state>
 		<window_groups />

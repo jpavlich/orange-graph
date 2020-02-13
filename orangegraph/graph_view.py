@@ -6,21 +6,27 @@ import Orange.data
 from Orange.widgets import widget, gui, settings
 from Orange.widgets.utils.signals import Input, Output
 from Orange.widgets.widget import OWWidget
+from orangegraph.functions.visualization import visualize_graph
+
+html = """
+        <p>test123</p>
+"""
 
 
-class GraphTestOut(OWWidget):
-    name = "Graph Test Out"
-    description = "Test Out"
+class GraphView(OWWidget):
+    name = "Graph View"
+    description = "Visualizes a graph"
     icon = "icons/graph.svg"
     priority = 10
 
     class Inputs:
-        pass
-
-    class Outputs:
-        result = Output("data", object)
+        graph = Input("G", nx.Graph)
 
     want_main_area = False
+
+    @Inputs.graph
+    def set_graph(self, G):
+        self.G = G
 
     def __init__(self):
         super().__init__()
@@ -31,9 +37,8 @@ class GraphTestOut(OWWidget):
             box, "No data on input yet, waiting to get something."
         )
         self.infob = gui.widgetLabel(box, "")
-        gui.button(box, self, "Commit", callback=self.commit)
+        gui.button(box, self, "Display", callback=self.commit)
 
     def commit(self):
-        """Commit/send the outputs"""
-        self.Outputs.result.send("aaaa")
+        visualize_graph(self.G)
 
