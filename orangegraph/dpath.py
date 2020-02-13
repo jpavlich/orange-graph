@@ -6,6 +6,7 @@ import Orange.data
 from Orange.widgets import widget, gui, settings
 from Orange.widgets.utils.signals import Input, Output
 from Orange.widgets.widget import OWWidget
+from typing import Union
 
 
 class dpath(OWWidget):
@@ -16,10 +17,9 @@ class dpath(OWWidget):
 
     class Inputs:
         G = Input("G", networkx.classes.graph.Graph)
-        source = Input("source", object)
-        target = Input("target", object)
+        source = Input("source", (str, int))
+        target = Input("target", (str, int))
         weight = Input("weight", str)
-        
 
     class Outputs:
         result = Output("Result", Orange.data.table.Table)
@@ -36,21 +36,22 @@ class dpath(OWWidget):
         )
         self.infob = gui.widgetLabel(box, "")
 
-
-        self.txt_source = gui.lineEdit(box, self, '', orientation="horizontal", label="source:")
+        self.txt_source = gui.lineEdit(
+            box, self, "", orientation="horizontal", label="source:"
+        )
         self.txt_source.textChanged.connect(self.update_source)
 
-
-        self.txt_target = gui.lineEdit(box, self, '', orientation="horizontal", label="target:")
+        self.txt_target = gui.lineEdit(
+            box, self, "", orientation="horizontal", label="target:"
+        )
         self.txt_target.textChanged.connect(self.update_target)
 
-
-        self.txt_weight = gui.lineEdit(box, self, '', orientation="horizontal", label="weight:")
+        self.txt_weight = gui.lineEdit(
+            box, self, "", orientation="horizontal", label="weight:"
+        )
         self.txt_weight.textChanged.connect(self.update_weight)
 
-
         gui.button(box, self, "Commit", callback=self.commit)
-
 
     def update_G(self):
         try:
@@ -60,8 +61,6 @@ class dpath(OWWidget):
         except:
             pass
 
-
-
     def update_source(self):
         try:
             source_value = eval(self.txt_source.text())
@@ -69,8 +68,6 @@ class dpath(OWWidget):
 
         except:
             pass
-
-
 
     def update_target(self):
         try:
@@ -80,8 +77,6 @@ class dpath(OWWidget):
         except:
             pass
 
-
-
     def update_weight(self):
         try:
             weight_value = eval(self.txt_weight.text())
@@ -89,8 +84,6 @@ class dpath(OWWidget):
 
         except:
             pass
-
-
 
     @Inputs.G
     def set_G(self, G: networkx.classes.graph.Graph):
@@ -107,7 +100,6 @@ class dpath(OWWidget):
     @Inputs.weight
     def set_weight(self, weight: str):
         self.weight = weight
-    
 
     # def handleNewSignals(self):
     #     """Coalescing update."""
